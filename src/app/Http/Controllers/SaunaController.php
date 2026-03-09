@@ -9,7 +9,7 @@ class SaunaController extends Controller
 {
     public function index()
     {
-        $saunas = Sauna::all();
+        $saunas = Sauna::with('firstImage')->get();
 
         return view('sauna.index', compact('saunas'));
     }

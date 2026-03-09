@@ -6,6 +6,7 @@ use Illuminate\Validation\ValidationException;
 use App\Http\Controllers\Controller;
 use App\Models\Sauna;
 use App\Models\Rating;
+use App\Models\SaunaImage;
 use App\Http\Requests\Admin\SaunaRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -89,11 +90,8 @@ class SaunaController extends Controller
                 foreach ($tmpImages as $tmpImage) {
                     $newPath = str_replace('public/tmp/', 'public/saunas/', $tmpImage->path);
                     Storage::move($tmpImage->path, $newPath);
-                    DB::table('sauna_images')->insert([
-                        'sauna_id' => $sauna->id,
+                    $sauna->images()->create([
                         'path' => $newPath,
-                        'created_at' => now(),
-                        'updated_at' => now(),
                     ]);
                 }
 

@@ -28,4 +28,15 @@ class Sauna extends Model
     {
         return $this->hasOne(Rating::class);
     }
+
+    public function images()
+    {
+        return $this->hasMany(SaunaImage::class);
+    }
+
+    public function firstImage()
+    {
+        return $this->hasOne(SaunaImage::class)->oldestOfMany();
+    }
+
 }
