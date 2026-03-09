@@ -137,6 +137,20 @@
         <div>{{ $message }}</div>
     @enderror
 </div>
+<div class="form-group">
+    <label for="sauna_image">サウナ画像</label>
+    <input
+        type="file"
+        id="sauna_image"
+        class="c-form__input"
+        accept="image/*"
+        data-url="{{ route('admin.sauna.upload_tmp') }}"
+        name="sauna_img"
+        onchange="uploadImg(this);"
+    >
+    <div id="image_preview_container" style="display: flex; gap: 10px; margin-top: 10px;">
+    </div>
+</div>
 
 <h2 class="form-section-title">サウナ評価（5段階）</h2>
 

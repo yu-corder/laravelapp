@@ -39,6 +39,8 @@ class SaunaRequest extends FormRequest
             'accessibility'    => 'required|integer|between:1,5',
             'comfortability'   => 'required|integer|between:1,5',
             'totonoi_score'    => 'required|integer|between:1,5',
+
+            'upload_token' => 'required|string',
         ];
     }
 

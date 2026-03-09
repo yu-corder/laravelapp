@@ -25,6 +25,8 @@ Route::get('/admin/sauna', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/admin/sauna', [SaunaController::class, 'index']);
 
+    Route::post('/admin/sauna/upload-tmp', [SaunaController::class, 'upload'])->name('admin.sauna.upload_tmp');
+
     Route::get('/admin/sauna/add', [SaunaController::class, 'showAdd']);
     Route::post('/admin/sauna/add', [SaunaController::class, 'add']);
 

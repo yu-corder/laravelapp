@@ -30,3 +30,35 @@ window.closeModal = function() {
     document.getElementById('form-display-area').style.display = 'none';
 };
 
+window.uploadImg = function(element) {
+    const file = element.files[0];
+    if (!file) return;
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    const uploadToken = document.getElementById('upload_token').value;
+
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('upload_token', uploadToken);
+    fetch('/admin/sauna/upload-tmp', {
+    method: 'POST',
+    headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': csrfToken,
+    },
+    body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert(data['msg']);
+            // プレビュー表示などの処理
+            console.log('保存先パス:', data.path);
+
+            // 例: プレビューエリアに画像を表示
+            const previewContainer = document.getElementById('image_preview_container');
+            previewContainer.innerHTML = `<img src="${data.url}" style="width:200px; border-radius:8px;">`;
+        }
+    })
+    .catch(error => console.error('エラー発生:', error));
+};
+
