@@ -16,12 +16,6 @@
 <form action="{{ url('admin/sauna/add') }}" method="post">
     @csrf
     @include('admin.sauna._form') {{-- 部品を読み込む --}}
-    <input
-    type="hidden"
-    id="upload_token"
-    name="upload_token"
-    value="{{ old('upload_token', $uploadToken) }}"
-    >
     <div class="form-group form-btn-group">
         <input class="tbl-btn edit c-btn--primary" type="submit" name="send" value="登録">
     </div>

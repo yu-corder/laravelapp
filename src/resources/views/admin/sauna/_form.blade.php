@@ -1,3 +1,8 @@
+<input
+    type="hidden"
+    id="upload_token"
+    name="upload_token"
+    value="{{ old('upload_token', $uploadToken) }}">
 <div class="form-group">
     <label for="addname">サウナ名<span class="c-badge--required">必須</span></label>
     <input
