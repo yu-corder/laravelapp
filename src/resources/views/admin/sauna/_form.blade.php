@@ -161,10 +161,10 @@
             <label>現在の画像</label>
             <div class="d-flex flex-wrap" style="gap: 15px; margin-top: 10px;">
                 @foreach($sauna->images as $image)
-                    <div class="current-image-item">
+                    <div class="current-image-item" id="current-image-item-{{ $image->id }}">
                         <img src="{{ Storage::url($image->path) }}"
                             style="width: 150px; height: 100px; object-fit: cover; border-radius: 8px;">
-                        <img class="delete-image" src="{{ asset('images/icons/batsu.svg') }}" alt="削除" onclick="if(confirm('画像を削除しますか？')){deletTmpImg('{{ $image->id }}');}">
+                        <img class="delete-image" src="{{ asset('images/icons/batsu.svg') }}" alt="削除" onclick="if(confirm('画像を削除しますか？')){deleteImg('{{ $image->id }}');}">
                     </div>
                 @endforeach
             </div>

@@ -4,7 +4,9 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\SaunaController;
 use App\Http\Controllers\Admin\TmpImageController;
+use App\Http\Controllers\Admin\SaunaImageController;
 use App\Http\Controllers\Admin\TotonoiHistoryController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +30,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/admin/sauna/upload-tmp', [TmpImageController::class, 'upload'])->name('admin.sauna.upload_tmp');
     Route::post('/admin/sauna/delete-tmp', [TmpImageController::class, 'delete'])->name('admin.sauna.delete_tmp');
+
+    Route::post('/admin/sauna/delete-img', [SaunaImageController::class, 'delete'])->name('admin.sauna.delete_img');
 
     Route::get('/admin/sauna/add', [SaunaController::class, 'showAdd']);
     Route::post('/admin/sauna/add', [SaunaController::class, 'add']);

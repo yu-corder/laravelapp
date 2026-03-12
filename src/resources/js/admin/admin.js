@@ -92,3 +92,30 @@ window.deleteTmpImg = function(imgId,element) {
         });
 };
 
+window.deleteImg = function(imgId) {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    const formData = new FormData();
+    formData.append('id', imgId);
+    fetch('/admin/sauna/delete-img', {
+    method: 'POST',
+    headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': csrfToken,
+    },
+    body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert('削除しました');
+            const img = document.getElementById(`current-image-item-${imgId}`);
+            img.remove();
+        }
+    })
+    .catch(
+        error => {
+            console.error('エラー発生:', error);
+        });
+};
+
+
