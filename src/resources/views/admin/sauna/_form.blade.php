@@ -155,6 +155,21 @@
     >
     <div id="image_preview_container" style="display: flex; gap: 10px; margin-top: 10px;">
     </div>
+
+    @if(isset($sauna) && $sauna->exists)
+        <div class="form-group">
+            <label>現在の画像</label>
+            <div class="d-flex flex-wrap" style="gap: 15px; margin-top: 10px;">
+                @foreach($sauna->images as $image)
+                    <div class="current-image-item">
+                        <img src="{{ Storage::url($image->path) }}"
+                            style="width: 150px; height: 100px; object-fit: cover; border-radius: 8px;">
+                        <img class="delete-image" src="{{ asset('images/icons/batsu.svg') }}" alt="削除" onclick="if(confirm('画像を削除しますか？')){deletTmpImg('{{ $image->id }}');}">
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
 </div>
 
 <h2 class="form-section-title">サウナ評価（5段階）</h2>

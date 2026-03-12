@@ -134,35 +134,4 @@ class SaunaController extends Controller
 
         return redirect("/admin/sauna");
     }
-
-    public function upload(Request $request)
-    {
-        // バリデーション
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
-            'upload_token' => 'required|string',
-        ]);
-
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $path = $file->store('public/tmp'); // 'public/tmp/ランダム名.jpg' で保存される
-
-            DB::table('tmp_sauna_images')->insert([
-                'upload_token' => $request->upload_token,
-                'path' => $path,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-            return response()->json([
-                'status' => 'success',
-                'path' => $path,
-                'url' => Storage::url($path), // ブラウザ表示用のURL
-                'msg' => '画像を一時保存しました',
-            ]);
-        }
-
-        return response()->json(['status' => 'error', 'msg' => 'アップロード失敗'], 400);
-    }
-
 }

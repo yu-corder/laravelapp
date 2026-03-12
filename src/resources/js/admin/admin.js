@@ -53,12 +53,42 @@ window.uploadImg = function(element) {
             alert(data['msg']);
             // プレビュー表示などの処理
             console.log('保存先パス:', data.path);
-
-            // 例: プレビューエリアに画像を表示
+            const iconUrl = "/images/icons/batsu.svg";
             const previewContainer = document.getElementById('image_preview_container');
-            previewContainer.innerHTML = `<img src="${data.url}" style="width:200px; border-radius:8px;">`;
+            previewContainer.innerHTML = `<img id="tmp_img_${data.id}" class="image_preview" src="${data.url}" style="width:200px; border-radius:8px;">
+            <img class="delete-image" src="${iconUrl}" style="border-radius:8px;" onclick="if(confirm('画像を削除しますか？')){ deleteTmpImg(${data.id}, this); }">`;
         }
     })
     .catch(error => console.error('エラー発生:', error));
+    element.value = '';
+};
+
+window.deleteTmpImg = function(imgId,element) {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    const formData = new FormData();
+    const input = document.getElementById('image_preview_container');
+    formData.append('id', imgId);
+    fetch('/admin/sauna/delete-tmp', {
+    method: 'POST',
+    headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': csrfToken,
+    },
+    body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert(data['msg']);
+            const previewContainer = document.getElementById('image_preview_container');
+            const tmp_img = document.getElementById(`tmp_img_${imgId}`);
+            element.remove();
+            tmp_img.remove();
+        }
+    })
+    .catch(
+        error => {
+            console.error('エラー発生:', error);
+        });
 };
 
