@@ -20,7 +20,6 @@ class TotonoiHistory extends Model
 
     public function sauna(): BelongsTo
     {
-        // 第2引数（外部キー）と第3引数（親の主キー）を明示的に指定するとより確実です
         return $this->belongsTo(Sauna::class, 'sauna_id', 'id');
     }
 }

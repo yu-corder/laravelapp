@@ -13,7 +13,9 @@ use Carbon\Carbon;
 
 class TotonoiHistoryController extends Controller
 {
-    //t_totonoi_historiesテーブルから取得
+    /**
+     * 一覧ページ
+     */
     public function index(Request $request)
     {
         $monthParam = $request->query('month', now()->format('Y-m'));
@@ -29,14 +31,15 @@ class TotonoiHistoryController extends Controller
             ->get()
             ->keyBy('visit_date');
 
-        // 前月・次月のリンク用文字列（YYYY-MM）
         $prevMonth = $currentDate->copy()->subMonth()->format('Y-m');
         $nextMonth = $currentDate->copy()->addMonth()->format('Y-m');
 
         return view('admin.totonoi_history.index', compact('currentMonth', 'daysInMonth', 'firstDayOfWeek', 'histories', 'prevMonth', 'nextMonth', 'currentDate'));
     }
 
-    //さ活登録ページ
+    /**
+     * サ活登録ページ
+     */
     public function showAdd(Request $request)
     {
         if ($request->ajax()) {
@@ -51,17 +54,17 @@ class TotonoiHistoryController extends Controller
         }
     }
 
-    //さ活登録処理
+    /**
+     * サ活登録
+     */
     public function add(TotonoiHistoryRequest $request)
     {
-        //フォームに入力した値の確認
         $totonoiHistory = new TotonoiHistory;
         $totonoiHistory->fill($request->all())->save();
 
         $visitDate = Carbon::parse($request->input('visit_date'));
         $monthParam = $visitDate->format('Y-m');
 
-        // ?month=2026-04
         Log::info("登録が完了しました。");
         return redirect()->route('admin.totonoi_history.index', ['month' => $monthParam]);
     }

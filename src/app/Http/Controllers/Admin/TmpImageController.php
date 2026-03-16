@@ -41,9 +41,7 @@ class TmpImageController extends BaseImageController
         $tmpImage = TmpSaunaImage::find($request->id);
 
         if ($tmpImage) {
-            // 2. 基底クラスのメソッドで物理ファイルを削除
             $this->processDelete($tmpImage->path);
-            // 3. DBレコード削除
             $tmpImage->delete();
         }
 

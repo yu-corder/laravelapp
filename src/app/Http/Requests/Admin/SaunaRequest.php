@@ -23,7 +23,7 @@ class SaunaRequest extends FormRequest
     {
         return [
             'name'        => 'required|string|max:100',
-            'postcode'    => 'required|digits:7',         // 7桁の数字
+            'postcode'    => 'required|digits:7',
             'prefecture'  => 'required|string',
             'city'        => 'required|string',
             'address'     => 'required|string',
