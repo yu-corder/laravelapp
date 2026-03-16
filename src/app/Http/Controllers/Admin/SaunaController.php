@@ -15,27 +15,34 @@ use Illuminate\Support\Facades\Storage;
 
 class SaunaController extends Controller
 {
-    //商品一覧ページの表示
+    /**
+     * 一覧ページ
+     */
     public function index()
     {
-        // DBから全件取得
         $saunas = Sauna::all();
-        //index.blade.phpを返却
         return view("admin.sauna.index", compact('saunas'));
     }
 
-    //サウナ編集ページ
+    /**
+     * 更新ページ
+     */
     public function showEdit($id)
     {
         return $this->renderView($id);
     }
 
-    //サウナ登録ページ
+    /**
+     * 登録ページ
+     */
     public function showAdd()
     {
         return $this->renderView();
     }
 
+    /**
+     * 登録・更新ページの共通処理
+     */
     private function renderView($id = null)
     {
         $sauna = $id ? Sauna::with('images')->findOrFail($id) : new Sauna;
@@ -81,7 +88,9 @@ class SaunaController extends Controller
         return redirect("/admin/sauna")->with('success', $message);
     }
 
-    //サウナ削除
+    /**
+     * 削除
+     */
     public function delete($id)
     {
         $sauna = Sauna::find($id);
