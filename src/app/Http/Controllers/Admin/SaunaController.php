@@ -27,9 +27,21 @@ class SaunaController extends Controller
     //サウナ編集ページ
     public function showEdit($id)
     {
-        $sauna = Sauna::with('images')->find($id);
+        return $this->renderView($id);
+    }
+
+    //サウナ登録ページ
+    public function showAdd()
+    {
+        return $this->renderView();
+    }
+
+    private function renderView($id = null)
+    {
+        $sauna = $id ? Sauna::with('images')->findOrFail($id) : new Sauna;
         $uploadToken = Str::random(32);
-        return view('admin.sauna.edit', compact('sauna', 'uploadToken'));
+        $view = $id ? 'admin.sauna.edit' : 'admin.sauna.add';
+        return view($view, compact('sauna', 'uploadToken'));
     }
 
     //サウナ編集の実行
@@ -50,34 +62,12 @@ class SaunaController extends Controller
                 ]
             );
 
-            $tmpImages = DB::table('tmp_sauna_images')
-                ->where('upload_token', $request->upload_token)
-                ->get();
-
-            foreach ($tmpImages as $tmpImage) {
-                $newPath = str_replace('public/tmp/', 'public/saunas/', $tmpImage->path);
-                Storage::move($tmpImage->path, $newPath);
-
-                $sauna->images()->create([
-                    'path' => $newPath,
-                ]);
-            }
-
-            DB::table('tmp_sauna_images')
-                ->where('upload_token', $request->upload_token)
-                ->delete();
+            SaunaImage::createFromTmpToken($sauna->id, $request->upload_token);
         });
 
         Log::info("編集が完了しました。");
 
         return redirect("/admin/sauna")->with('success', '編集が完了しました');
-    }
-
-    //サウナ登録ページ
-    public function showAdd()
-    {
-        $uploadToken = Str::random(32);
-        return view('admin.sauna.add', compact('uploadToken'));
     }
 
     //サウナ登録処理
@@ -87,10 +77,7 @@ class SaunaController extends Controller
             //フォームに入力した値の確認
             DB::transaction(function () use ($request) {
                 $sauna = new Sauna;
-
                 $sauna->fill($request->all())->save();
-
-                // 2. 評価データの登録
                 $sauna->rating()->create([
                     'cost_performance' => $request->cost_performance,
                     'accessibility'    => $request->accessibility,
@@ -98,21 +85,7 @@ class SaunaController extends Controller
                     'totonoi_score'    => $request->totonoi_score,
                 ]);
 
-                $tmpImages = DB::table('tmp_sauna_images')
-                    ->where('upload_token', $request->upload_token)
-                    ->get();
-
-                foreach ($tmpImages as $tmpImage) {
-                    $newPath = str_replace('public/tmp/', 'public/saunas/', $tmpImage->path);
-                    Storage::move($tmpImage->path, $newPath);
-                    $sauna->images()->create([
-                        'path' => $newPath,
-                    ]);
-                }
-
-                DB::table('tmp_sauna_images')
-                    ->where('upload_token', $request->upload_token)
-                    ->delete();
+                SaunaImage::createFromTmpToken($sauna->id, $request->upload_token);
             });
 
             Log::info("登録が完了しました。");
@@ -126,12 +99,8 @@ class SaunaController extends Controller
     public function delete($id)
     {
         $sauna = Sauna::find($id);
-
         $sauna->delete();
-
         Log::info("削除が完了しました。");
-
-
         return redirect("/admin/sauna");
     }
 }
