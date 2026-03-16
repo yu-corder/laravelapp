@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\Admin\ImageRequest;
 
 abstract class BaseImageController extends Controller
 {
@@ -13,7 +14,7 @@ abstract class BaseImageController extends Controller
     /**
      * アップロード共通処理
      */
-    protected function processUpload(Request $request)
+    protected function processUpload(ImageRequest $request)
     {
         $file = $request->file('image');
         return $file->store($this->storagePath());

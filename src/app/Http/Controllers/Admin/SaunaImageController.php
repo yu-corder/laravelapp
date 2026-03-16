@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\SaunaImage;
+use App\Http\Requests\Admin\ImageRequest;
 
 class SaunaImageController extends BaseImageController
 {
     protected function storagePath(): string { return 'public/saunas'; }
 
-    public function delete(Request $request)
+    public function delete(ImageRequest $request)
     {
         $image = SaunaImage::find($request->id);
 

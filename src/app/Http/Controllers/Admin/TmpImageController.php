@@ -6,18 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\TmpSaunaImage;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\Admin\ImageRequest;
 
 class TmpImageController extends BaseImageController
 {
     protected function storagePath(): string { return 'public/tmp'; }
 
-    public function upload(Request $request)
+    public function upload(ImageRequest $request)
     {
-        // バリデーション
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
-            'upload_token' => 'required|string',
-        ]);
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -40,7 +36,7 @@ class TmpImageController extends BaseImageController
         return response()->json(['status' => 'error', 'msg' => 'アップロード失敗'], 400);
     }
 
-    public function delete(Request $request)
+    public function delete(ImageRequest $request)
     {
         $tmpImage = TmpSaunaImage::find($request->id);
 
