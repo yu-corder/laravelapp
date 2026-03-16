@@ -44,55 +44,41 @@ class SaunaController extends Controller
         return view($view, compact('sauna', 'uploadToken'));
     }
 
-    //サウナ編集の実行
+    /**
+     * 更新の共通処理
+     */
     public function edit($id, SaunaRequest $request)
     {
-        DB::transaction(function () use ($id, $request) {
-            $sauna = Sauna::find($id);
+        return $this->store($request, $id);
+    }
 
+    /**
+     * 登録
+     */
+    public function add(SaunaRequest $request)
+    {
+        return $this->store($request);
+    }
+
+    /**
+     * 登録・更新の共通処理
+     */
+    private function store(SaunaRequest $request, $id = null)
+    {
+        DB::transaction(function () use ($request, $id) {
+            $sauna = $id ? Sauna::findOrFail($id) : new Sauna;
             $sauna->fill($request->validated())->save();
-
             $sauna->rating()->updateOrCreate(
                 ['sauna_id' => $sauna->id],
-                [
-                    'cost_performance' => $request->cost_performance,
-                    'accessibility'    => $request->accessibility,
-                    'comfortability'   => $request->comfortability,
-                    'totonoi_score'    => $request->totonoi_score,
-                ]
+                $request->only(['cost_performance', 'accessibility', 'comfortability', 'totonoi_score'])
             );
-
             SaunaImage::createFromTmpToken($sauna->id, $request->upload_token);
         });
 
-        Log::info("編集が完了しました。");
+        $message = $id ? '編集が完了しました' : '登録が完了しました';
+        Log::info($message);
 
-        return redirect("/admin/sauna")->with('success', '編集が完了しました');
-    }
-
-    //サウナ登録処理
-    public function add(SaunaRequest $request)
-    {
-        try {
-            //フォームに入力した値の確認
-            DB::transaction(function () use ($request) {
-                $sauna = new Sauna;
-                $sauna->fill($request->all())->save();
-                $sauna->rating()->create([
-                    'cost_performance' => $request->cost_performance,
-                    'accessibility'    => $request->accessibility,
-                    'comfortability'   => $request->comfortability,
-                    'totonoi_score'    => $request->totonoi_score,
-                ]);
-
-                SaunaImage::createFromTmpToken($sauna->id, $request->upload_token);
-            });
-
-            Log::info("登録が完了しました。");
-            return redirect("/admin/sauna")->with('success', '登録しました');
-        } catch (\Exception $e) {
-            return back()->withInput();
-        }
+        return redirect("/admin/sauna")->with('success', $message);
     }
 
     //サウナ削除
