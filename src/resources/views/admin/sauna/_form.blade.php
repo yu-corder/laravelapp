@@ -135,9 +135,7 @@
 </div>
 <div class="form-group">
     <label for="adddescription">コメント</label>
-    <textarea class="c-form__input" id="adddescription" name="description" placeholder="コメントを入力してください">
-        {{ old('description', $sauna->description ?? '') }}
-    </textarea>
+    <textarea class="c-form__input" id="adddescription" name="description" placeholder="コメントを入力してください">{{ trim(old('description', $sauna->description ?? '')) }}</textarea>
     @error('description')
         <div>{{ $message }}</div>
     @enderror
