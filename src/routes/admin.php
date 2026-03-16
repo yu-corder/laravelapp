@@ -45,6 +45,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/admin/totonoi-history/add', [TotonoiHistoryController::class, 'showAdd'])->name('admin.totonoi_history.add');
     Route::post('/admin/totonoi-history/add', [TotonoiHistoryController::class, 'add']);
+
+    Route::get('/admin/totonoi-history/edit/{id}', [TotonoiHistoryController::class, 'showEdit'])->name('admin.totonoi_history.edit');
+    Route::post('/admin/totonoi-history/edit/{id}', [TotonoiHistoryController::class, 'edit']);
+
+    Route::post('/admin/totonoi-history/delete/{id}', [TotonoiHistoryController::class, 'delete']);
 });
 
 

@@ -18,17 +18,21 @@
             @for ($day = 1; $day <= $daysInMonth; $day++)
                 @php
                     $dateStr = $currentMonth->copy()->day($day)->format('Y-m-d');
-                    $history = $histories->get($dateStr);
+                    $dayHistories = $histories->get($dateStr, collect());
                 @endphp
 
-                <td class="{{ $history ? 'has-history' : '' }}" onclick="showModal('{{ $dateStr }}','{{ route('admin.totonoi_history.add') }}')">
-                    <div class="day-number">{{ $day }}</div>
+                <td class="{{ $dayHistories->isNotEmpty() ? 'has-history' : '' }}">
+                    {{-- 日付部分をクリックで新規登録モーダル --}}
+                    <div class="day-number" onclick="showModal('{{ $dateStr }}','{{ route('admin.totonoi_history.add') }}')">
+                        {{ $day }}
+                    </div>
 
-                    @if($history)
-                        <div class="history-badge">
+                    @foreach($dayHistories as $history)
+                        {{-- 各履歴をクリックで編集モーダル（IDを渡す） --}}
+                        <div class="history-badge" onclick="showEditModal('{{ $history->id }}')">
                             ♨️ {{ $history->sauna->name }}
                         </div>
-                    @endif
+                    @endforeach
                 </td>
 
                 @php $cnt++; @endphp

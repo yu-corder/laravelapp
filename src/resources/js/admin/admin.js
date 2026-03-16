@@ -25,6 +25,44 @@ window.showModal = function(date,fetchUrl) {
     .catch(error => console.error('エラー発生:', error));
 };
 
+window.showEditModal = function(historyId) {
+    const url = `/admin/totonoi-history/edit/${historyId}`;
+    fetch(url, {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('サーバから届いたデータ:', data);
+        console.log(data['html']);
+        if (data.status === 'success') {
+            const area = document.getElementById('form-display-area');
+            const back_area = document.getElementById('form-display-area-overray');
+            back_area.style.display = "block";
+            area.style.display = "block";
+            area.innerHTML = data.html;
+        }
+    })
+    .catch(error => console.error('エラー発生:', error));
+};
+
+window.deleteHistory = function(historyId) {
+    // 削除用フォームを動的に生成して送信する例
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = `/admin/totonoi-history/delete/${historyId}`;
+
+    const csrf = document.createElement('input');
+    csrf.type = 'hidden';
+    csrf.name = '_token';
+    csrf.value = document.querySelector('meta[name="csrf-token"]').content;
+
+    form.appendChild(csrf);
+    document.body.appendChild(form);
+    form.submit();
+};
+
 window.closeModal = function() {
     document.getElementById('form-display-area-overray').style.display = 'none';
     document.getElementById('form-display-area').style.display = 'none';

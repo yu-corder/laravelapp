@@ -29,7 +29,7 @@ class TotonoiHistoryController extends Controller
             ->whereYear('visit_date', $currentMonth->year)
             ->whereMonth('visit_date', $currentMonth->month)
             ->get()
-            ->keyBy('visit_date');
+            ->groupBy('visit_date');
 
         $prevMonth = $currentDate->copy()->subMonth()->format('Y-m');
         $nextMonth = $currentDate->copy()->addMonth()->format('Y-m');
@@ -67,5 +67,51 @@ class TotonoiHistoryController extends Controller
 
         Log::info("登録が完了しました。");
         return redirect()->route('admin.totonoi_history.index', ['month' => $monthParam]);
+    }
+
+    /**
+     * 編集フォームの取得 (Ajax)
+     */
+    public function showEdit($id)
+    {
+        $history = TotonoiHistory::findOrFail($id);
+        $saunas = Sauna::all();
+
+        // 共通の _form を使い、historyを渡す
+        $html = view('admin.totonoi_history._form', compact('history', 'saunas'))->render();
+
+        return response()->json([
+            'status' => 'success',
+            'html' => $html,
+        ]);
+    }
+
+    /**
+     * サ活編集
+     */
+    public function edit($id, TotonoiHistoryRequest $request)
+    {
+        $history = TotonoiHistory::findOrFail($id);
+        $history->fill($request->validated())->save();
+
+        Log::info("サ活を更新しました（ID: {$id}）");
+
+        $month = \Carbon\Carbon::parse($history->visit_date)->format('Y-m');
+        return redirect()->route('admin.totonoi_history.index', ['month' => $month])->with('success', '更新しました');
+    }
+
+    /**
+     * サ活削除
+     */
+    public function delete($id)
+    {
+        $history = TotonoiHistory::findOrFail($id);
+        $month = \Carbon\Carbon::parse($history->visit_date)->format('Y-m');
+
+        $history->delete();
+
+        Log::info("サ活を削除しました（ID: {$id}）");
+
+        return redirect()->route('admin.totonoi_history.index', ['month' => $month])->with('success', '削除しました');
     }
 }
