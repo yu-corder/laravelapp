@@ -25,6 +25,7 @@
                     {{-- 日付部分をクリックで新規登録モーダル --}}
                     <div class="day-number" onclick="showModal('{{ $dateStr }}','{{ route('admin.totonoi_history.add') }}')">
                         {{ $day }}
+                        <img class="add-sakatsu" src="{{ asset('images/icons/icon-add.png') }}" alt="追加">
                     </div>
 
                     @foreach($dayHistories as $history)
