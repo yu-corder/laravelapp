@@ -38,46 +38,13 @@ class TotonoiHistoryController extends Controller
     }
 
     /**
-     * サ活登録ページ
+     * フォーム取得 (Ajax) - showAdd, showEdit 両対応
      */
-    public function showAdd(Request $request)
+    private function getForm($id = null)
     {
-        if ($request->ajax()) {
-
-            $saunas = Sauna::all();
-            $html = view('admin.totonoi_history._form', compact('saunas'))->render();
-
-            return response()->json([
-                'status' => 'success',
-                'html' => $html,
-            ]);
-        }
-    }
-
-    /**
-     * サ活登録
-     */
-    public function add(TotonoiHistoryRequest $request)
-    {
-        $totonoiHistory = new TotonoiHistory;
-        $totonoiHistory->fill($request->all())->save();
-
-        $visitDate = Carbon::parse($request->input('visit_date'));
-        $monthParam = $visitDate->format('Y-m');
-
-        Log::info("登録が完了しました。");
-        return redirect()->route('admin.totonoi_history.index', ['month' => $monthParam]);
-    }
-
-    /**
-     * 編集フォームの取得 (Ajax)
-     */
-    public function showEdit($id)
-    {
-        $history = TotonoiHistory::findOrFail($id);
+        $history = $id ? TotonoiHistory::findOrFail($id) : null;
         $saunas = Sauna::all();
 
-        // 共通の _form を使い、historyを渡す
         $html = view('admin.totonoi_history._form', compact('history', 'saunas'))->render();
 
         return response()->json([
@@ -87,17 +54,54 @@ class TotonoiHistoryController extends Controller
     }
 
     /**
+     * 保存処理(登録・更新)
+     */
+    private function store(TotonoiHistoryRequest $request, $id = null)
+    {
+        $history = $id ? TotonoiHistory::findOrFail($id) : new TotonoiHistory;
+
+        $history->fill($request->validated())->save();
+
+        $monthParam = Carbon::parse($history->visit_date)->format('Y-m');
+        $message = $id ? "サ活を更新しました" : "登録が完了しました";
+
+        Log::info($message . "（ID: {$history->id}）");
+
+        return redirect()
+            ->route('admin.totonoi_history.index', ['month' => $monthParam])
+            ->with('success', $message);
+    }
+
+    /**
+     * サ活登録ページ
+     */
+    public function showAdd(Request $request)
+    {
+        return $this->getForm();
+    }
+
+    /**
+     * サ活登録
+     */
+    public function add(TotonoiHistoryRequest $request)
+    {
+        return $this->store($request);
+    }
+
+    /**
+     * 編集フォームの取得 (Ajax)
+     */
+    public function showEdit($id)
+    {
+        return $this->getForm($id);
+    }
+
+    /**
      * サ活編集
      */
     public function edit($id, TotonoiHistoryRequest $request)
     {
-        $history = TotonoiHistory::findOrFail($id);
-        $history->fill($request->validated())->save();
-
-        Log::info("サ活を更新しました（ID: {$id}）");
-
-        $month = \Carbon\Carbon::parse($history->visit_date)->format('Y-m');
-        return redirect()->route('admin.totonoi_history.index', ['month' => $month])->with('success', '更新しました');
+        return $this->store($request, $id);
     }
 
     /**
