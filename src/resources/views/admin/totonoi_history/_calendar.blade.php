@@ -42,7 +42,7 @@
                         @endphp
 
                         <div class="history-badge"
-                        style="background-color: {{ $badgeColor }}; color: #fff; padding: 2px 4px; border-radius: 3px; margin-bottom: 2px;"
+                        style="background-color: {{ $badgeColor }};"
                         onclick="showEditModal('{{ $history->id }}')">
                             ♨️ {{ $history->sauna->name }}
                         </div>
