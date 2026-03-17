@@ -1,3 +1,13 @@
+@php
+    $palette = [
+        '#3ab0cf',
+        '#114c81',
+        '#2d7a6e',
+        '#00796b',
+        '#5c6bc0',
+    ];
+@endphp
+
 <table class="calendar-table" border="1">
     <thead>
         <tr>
@@ -8,13 +18,11 @@
         <tr>
             @php $cnt = 0; @endphp
 
-            {{-- 1日の曜日まで空のマスを作る --}}
             @for ($i = 0; $i < $firstDayOfWeek; $i++)
                 <td></td>
                 @php $cnt++; @endphp
             @endfor
 
-            {{-- 1日から月末までループ --}}
             @for ($day = 1; $day <= $daysInMonth; $day++)
                 @php
                     $dateStr = $currentMonth->copy()->day($day)->format('Y-m-d');
@@ -22,15 +30,20 @@
                 @endphp
 
                 <td class="{{ $dayHistories->isNotEmpty() ? 'has-history' : '' }}">
-                    {{-- 日付部分をクリックで新規登録モーダル --}}
                     <div class="day-number" onclick="showModal('{{ $dateStr }}','{{ route('admin.totonoi_history.add') }}')">
                         {{ $day }}
                         <img class="add-sakatsu" src="{{ asset('images/icons/icon-add.png') }}" alt="追加">
                     </div>
 
                     @foreach($dayHistories as $history)
-                        {{-- 各履歴をクリックで編集モーダル（IDを渡す） --}}
-                        <div class="history-badge" onclick="showEditModal('{{ $history->id }}')">
+                        @php
+                            $colorIndex = $history->sauna->id % count($palette);
+                            $badgeColor = $palette[$colorIndex];
+                        @endphp
+
+                        <div class="history-badge"
+                        style="background-color: {{ $badgeColor }}; color: #fff; padding: 2px 4px; border-radius: 3px; margin-bottom: 2px;"
+                        onclick="showEditModal('{{ $history->id }}')">
                             ♨️ {{ $history->sauna->name }}
                         </div>
                     @endforeach
@@ -38,13 +51,11 @@
 
                 @php $cnt++; @endphp
 
-                {{-- 土曜日(7列目)で改行 --}}
                 @if ($cnt % 7 == 0)
                     </tr><tr>
                 @endif
             @endfor
 
-            {{-- 最後の空マスを埋める --}}
             @while ($cnt % 7 != 0)
                 <td></td>
                 @php $cnt++; @endphp
