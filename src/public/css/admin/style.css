@@ -271,7 +271,6 @@ select.c-form__input {
     display: none;
     width: 60%;
     height: auto;
-    max-height: 80vh;
     background-color: #fff;
     border: #3ab0cf 1px solid;
     position: fixed;
@@ -329,4 +328,19 @@ select.c-form__input {
 .add-sakatsu {
     height: 20px;
     width: 20px;
+}
+
+.sa-katsu-price, .sa-katsu-name {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 10px 12px;
+}
+
+.sa-katsu-form-group {
+    margin-top: 10px;
+}
+
+.calender-header-group {
+    display: flex;
+    justify-content: space-between;
 }

@@ -15,6 +15,7 @@ class TotonoiHistory extends Model
     protected $fillable = [
         'sauna_id',
         'visit_date',
+        'price',
         'comment',
     ];
 

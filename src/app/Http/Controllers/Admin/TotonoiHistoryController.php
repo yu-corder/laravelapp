@@ -28,13 +28,15 @@ class TotonoiHistoryController extends Controller
         $histories = TotonoiHistory::with('sauna')
             ->whereYear('visit_date', $currentMonth->year)
             ->whereMonth('visit_date', $currentMonth->month)
-            ->get()
-            ->groupBy('visit_date');
+            ->get();
+
+        $totalPrice = $histories->sum('price');
+        $histories = $histories->groupBy('visit_date');
 
         $prevMonth = $currentDate->copy()->subMonth()->format('Y-m');
         $nextMonth = $currentDate->copy()->addMonth()->format('Y-m');
 
-        return view('admin.totonoi_history.index', compact('currentMonth', 'daysInMonth', 'firstDayOfWeek', 'histories', 'prevMonth', 'nextMonth', 'currentDate'));
+        return view('admin.totonoi_history.index', compact('currentMonth', 'daysInMonth', 'firstDayOfWeek', 'histories', 'prevMonth', 'nextMonth', 'currentDate', 'totalPrice'));
     }
 
     /**

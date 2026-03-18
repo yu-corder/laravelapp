@@ -25,6 +25,7 @@ class TotonoiHistoryRequest extends FormRequest
             'sauna_id'   => 'required|exists:saunas,id',
             'visit_date' => 'required|date',
             'comment'    => 'nullable|string|max:500',
+            'price'      => 'nullable|integer|min:0',
         ];
     }
 }
