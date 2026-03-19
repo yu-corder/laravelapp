@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\SaunaController;
 use App\Http\Controllers\Admin\TmpImageController;
 use App\Http\Controllers\Admin\SaunaImageController;
 use App\Http\Controllers\Admin\TotonoiHistoryController;
+use App\Http\Controllers\Admin\ContentController;
 
 
 /*
@@ -50,6 +51,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/totonoi-history/edit/{id}', [TotonoiHistoryController::class, 'edit']);
 
     Route::post('/admin/totonoi-history/delete/{id}', [TotonoiHistoryController::class, 'delete']);
+
+    Route::get('/admin/contents', [ContentController::class, 'index']);
+    Route::get('/admin/content/add', [ContentController::class, 'showAdd']);
+    Route::post('/admin/content/add', [ContentController::class, 'add']);
+
+    Route::post('/admin/content/image-upload', [ContentController::class, 'uploadImage'])->name('admin.content.image.upload');
 });
 
 

@@ -6,6 +6,7 @@
         <li><a href="{{ url('admin/sauna') }}">サウナ一覧</a></li>
         <li><a href="{{ url('admin/sauna/add') }}">サウナ登録</a></li>
         <li><a href="{{ url('admin/totonoi-history') }}">サ活管理</a></li>
+        <li><a href="{{ url('admin/contents') }}">コンテンツ管理</a></li>
     </ul>
 </div>
 @endsection
