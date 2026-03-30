@@ -86,8 +86,22 @@ class ContentController extends Controller
 
             $content->save();
 
-            $movedImages = Image::moveFromTmp($request->upload_token, $content);
+            if ($id) {
+                $pattern = '/storage\/(content\/' . $content->id . '\/.*?\.(jpg|jpeg|png|gif|webp))/i';
+                preg_match_all($pattern, $content->body, $matches);
+                $usedPaths = $matches[1] ?? [];
 
+                foreach ($content->images as $dbImage) {
+                    if (!in_array($dbImage->file_path, $usedPaths)) {
+                        if (\Storage::disk('public')->exists($dbImage->file_path)) {
+                            \Storage::disk('public')->delete($dbImage->file_path);
+                        }
+                        $dbImage->delete();
+                    }
+                }
+            }
+
+            $movedImages = Image::moveFromTmp($request->upload_token, $content);
             if (!empty($movedImages)) {
                 $newBody = $content->body;
                 foreach ($movedImages as $image) {
