@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\SaunaController;
 use App\Http\Controllers\Admin\TmpImageController;
-use App\Http\Controllers\Admin\SaunaImageController;
+use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\TotonoiHistoryController;
 use App\Http\Controllers\Admin\ContentController;
 
@@ -60,6 +60,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/content/edit/{id}', [ContentController::class, 'edit']);
 
     Route::post('/admin/content/image-upload', [ContentController::class, 'uploadImage'])->name('admin.content.image.upload');
+
+    Route::post('/admin/upload/tmp', [TmpImageController::class, 'upload'])->name('admin.image.tmp.upload');
+    Route::post('/admin/upload/tmp/delete', [TmpImageController::class, 'delete'])->name('admin.image.tmp.delete');
+
+    Route::post('/admin/img/delete', [ImageController::class, 'delete'])->name('admin.img.delete');
+
+
 });
 
 

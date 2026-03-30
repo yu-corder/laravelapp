@@ -77,7 +77,7 @@ window.uploadImg = function(element) {
     const formData = new FormData();
     formData.append('image', file);
     formData.append('upload_token', uploadToken);
-    fetch('/admin/sauna/upload-tmp', {
+    fetch('/admin/upload/tmp', {
     method: 'POST',
     headers: {
         'X-Requested-With': 'XMLHttpRequest',
@@ -106,7 +106,7 @@ window.deleteTmpImg = function(imgId,element) {
     const formData = new FormData();
     const input = document.getElementById('image_preview_container');
     formData.append('id', imgId);
-    fetch('/admin/sauna/delete-tmp', {
+    fetch('/admin/upload/tmp/delete', {
     method: 'POST',
     headers: {
         'X-Requested-With': 'XMLHttpRequest',
@@ -134,7 +134,7 @@ window.deleteImg = function(imgId) {
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const formData = new FormData();
     formData.append('id', imgId);
-    fetch('/admin/sauna/delete-img', {
+    fetch('/admin/img/delete', {
     method: 'POST',
     headers: {
         'X-Requested-With': 'XMLHttpRequest',

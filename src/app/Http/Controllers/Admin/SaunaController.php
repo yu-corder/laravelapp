@@ -6,7 +6,7 @@ use Illuminate\Validation\ValidationException;
 use App\Http\Controllers\Controller;
 use App\Models\Sauna;
 use App\Models\Rating;
-use App\Models\SaunaImage;
+use App\Models\Image;
 use App\Http\Requests\Admin\SaunaRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -79,7 +79,7 @@ class SaunaController extends Controller
                 ['sauna_id' => $sauna->id],
                 $request->only(['cost_performance', 'accessibility', 'comfortability', 'totonoi_score'])
             );
-            SaunaImage::createFromTmpToken($sauna->id, $request->upload_token);
+            Image::moveFromTmp($request->upload_token, $sauna);
         });
 
         $message = $id ? '編集が完了しました' : '登録が完了しました';

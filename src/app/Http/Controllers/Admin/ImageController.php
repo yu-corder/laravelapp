@@ -5,19 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Models\SaunaImage;
+use App\Models\Image;
 use App\Http\Requests\Admin\ImageRequest;
+use Illuminate\Support\Facades\Log;
 
-class SaunaImageController extends BaseImageController
+class ImageController extends BaseImageController
 {
     protected function storagePath(): string { return 'public/saunas'; }
 
     public function delete(ImageRequest $request)
     {
-        $image = SaunaImage::find($request->id);
+        $image = Image::find($request->id);
 
         if ($image) {
-            $this->processDelete($image->path);
+            $this->processDelete($image->file_path);
             $image->delete();
         }
 

@@ -17,7 +17,7 @@ abstract class BaseImageController extends Controller
     protected function processUpload(ImageRequest $request,$key = 'image')
     {
         $file = $request->file($key);
-        return $file->store($this->storagePath(), 'public');
+        return $file->store('tmp', 'public');
     }
 
     /**

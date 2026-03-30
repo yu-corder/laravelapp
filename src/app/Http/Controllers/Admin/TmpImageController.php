@@ -42,7 +42,7 @@ class TmpImageController extends BaseImageController
         $tmpImage = TmpImage::find($request->id);
 
         if ($tmpImage) {
-            $this->processDelete($tmpImage->path);
+            $this->processDelete($tmpImage->file_path);
             $tmpImage->delete();
         }
 
