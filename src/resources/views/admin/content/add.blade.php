@@ -14,8 +14,8 @@
 @section('contents')
 <h2>コンテンツ登録</h2>
 <div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <a href="{{ url('/admin/content') }}" class="btn btn-secondary">一覧へ戻る</a>
+    <div class="d-flex justify-content-between align-items-center mb-4 contents-back">
+        <a href="{{ url('/admin/contents') }}" class="btn btn-secondary">一覧へ戻る</a>
     </div>
     <form action="{{ $content->id ? url('/admin/content/edit/'.$content->id) : url('/admin/content/add') }}"
           method="POST"

@@ -344,3 +344,11 @@ select.c-form__input {
     display: flex;
     justify-content: space-between;
 }
+
+.contents-back {
+    text-align: right;
+}
+
+.content-delete {
+    margin-top: 5px;
+}
