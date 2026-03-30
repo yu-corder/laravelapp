@@ -29,18 +29,27 @@ class Image extends Model
     public static function moveFromTmp($token, Model $model)
     {
         $tmpImages = TmpImage::where('token', $token)->get();
+        $results = [];
 
         foreach ($tmpImages as $tmp) {
             $folder = strtolower(class_basename($model));
             $newPath = "{$folder}/{$model->id}/" . basename($tmp->file_path);
 
-            Storage::disk('public')->move($tmp->file_path, $newPath);
+            if (Storage::disk('public')->exists($tmp->file_path)) {
+                Storage::disk('public')->move($tmp->file_path, $newPath);
 
-            $model->images()->create([
-                'file_path' => $newPath,
-                'display_order' => 0,
-            ]);
-            $tmp->delete();
+                $results[] = [
+                    'old_url' => Storage::url($tmp->file_path),
+                    'new_url' => Storage::url($newPath),
+                ];
+
+                $model->images()->create([
+                    'file_path' => $newPath,
+                    'display_order' => 0,
+                ]);
+                $tmp->delete();
+            }
         }
+        return $results;
     }
 }

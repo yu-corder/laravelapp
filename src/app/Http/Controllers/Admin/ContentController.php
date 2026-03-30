@@ -47,11 +47,11 @@ class ContentController extends Controller
     {
         $content = $id ? Content::findOrFail($id) : new Content;
         $saunas = Sauna::all(); // 紐付け対象の選択肢
-
+        $uploadToken = Str::random(32);
         // 既存の命名規則に合わせる
         $view = $id ? 'admin.content.edit' : 'admin.content.add';
 
-        return view($view, compact('content', 'saunas'));
+        return view($view, compact('content', 'saunas', 'uploadToken'));
     }
 
     /**
@@ -84,9 +84,18 @@ class ContentController extends Controller
             // 公開フラグの調整（チェックボックス対策）
             $content->is_public = $request['is_public'];
 
-            Image::moveFromTmp($request->upload_token, $content);
-
             $content->save();
+
+            $movedImages = Image::moveFromTmp($request->upload_token, $content);
+
+            if (!empty($movedImages)) {
+                $newBody = $content->body;
+                foreach ($movedImages as $image) {
+                    $newBody = str_replace($image['old_url'], $image['new_url'], $newBody);
+                }
+                $content->body = $newBody;
+                $content->save();
+            }
         });
 
         $message = $id ? 'コンテンツの編集が完了しました' : 'コンテンツの登録が完了しました';

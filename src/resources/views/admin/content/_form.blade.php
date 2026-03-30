@@ -1,5 +1,10 @@
 <div class="card">
     <div class="card-body">
+        <input
+        type="hidden"
+        id="upload_token"
+        name="upload_token"
+        value="{{ old('upload_token', $uploadToken) }}">
         {{-- 記事タイプ --}}
         <div class="form-group mb-3">
             <label class="form-label">記事タイプ <span class="c-badge--required">必須</span></label>
@@ -55,7 +60,8 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // CSRFトークンの取得
-        const token = document.querySelector('meta[name="csrf-token"]').content;
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+        const uploadToken = document.getElementById('upload_token').value;
 
         // CKEditorの初期化
         ClassicEditor
@@ -63,7 +69,7 @@
                 language: 'ja',
                 toolbar: ['heading', '|', 'bold', 'italic', 'underline', 'strikethrough', 'link', '|', 'bulletedList', 'numberedList', '|', 'blockQuote', 'insertTable', 'imageUpload', 'undo', 'redo'],
                 ckfinder: {
-                    uploadUrl: '{{ route("admin.content.image.upload") }}?_token=' + token,
+                    uploadUrl: `{{ route("admin.image.tmp.upload") }}?_token=${csrfToken}&upload_token=${uploadToken}`,
                 }
             })
             .catch(error => { console.error(error); });
