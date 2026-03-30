@@ -36,7 +36,7 @@ class Sauna extends Model
 
     public function firstImage()
     {
-        return $this->hasOne(SaunaImage::class)->oldestOfMany();
+        return $this->morphOne(Image::class, 'imageable')->oldestOfMany('display_order');
     }
 
 }

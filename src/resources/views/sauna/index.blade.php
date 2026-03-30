@@ -18,7 +18,7 @@
     <div class="sauna-card">
         <div class="sauna-image-wrapper">
             @if($sauna->firstImage)
-                <img src="{{ Storage::url($sauna->firstImage->path) }}" alt="{{ $sauna->name }}">
+                <img src="{{ Storage::url($sauna->firstImage->file_path) }}" alt="{{ $sauna->name }}">
             @else
                 <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #999;">
                     No Image
