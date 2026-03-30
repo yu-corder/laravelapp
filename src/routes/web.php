@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SaunaController; //追記
+use App\Http\Controllers\SaunaController;
+use App\Http\Controllers\ContentController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,5 +22,7 @@ Route::get('/', function () {
     return redirect()->route('saunas.index');
 });
 Route::get('/saunas', [App\Http\Controllers\SaunaController::class, 'index'])->name('saunas.index');
+
+Route::get('/contents/{id}', [ContentController::class, 'show'])->name('contents.show');
 
 require __DIR__.'/auth.php';

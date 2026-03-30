@@ -39,4 +39,9 @@ class Sauna extends Model
         return $this->morphOne(Image::class, 'imageable')->oldestOfMany('display_order');
     }
 
+    public function contents()
+    {
+        return $this->hasMany(Content::class);
+    }
+
 }

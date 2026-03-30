@@ -33,9 +33,15 @@
                 {{ $sauna->description ?? 'サウナの説明がここに表示されます。' }}
             </p>
 
-            <a href="{{ url('sauna/'.$sauna->id) }}" class="btn-detail">
-                詳細を見る
-            </a>
+            @if($sauna->contents->isNotEmpty())
+                <a href="{{ route('contents.show', $sauna->contents->first()->id) }}" class="btn-detail">
+                    詳細を見る
+                </a>
+            @else
+                <span class="btn-detail disabled" style="background: #ccc; cursor: not-allowed;">
+                    準備中
+                </span>
+            @endif
         </div>
     </div>
 @endforeach
