@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Admin\ImageRequest;
+use Illuminate\Support\Facades\Log;
 
 abstract class BaseImageController extends Controller
 {
@@ -26,8 +27,8 @@ abstract class BaseImageController extends Controller
      */
     protected function processDelete(string $path)
     {
-        if (Storage::exists($path)) {
-            return Storage::delete($path);
+        if (Storage::disk('public')->exists($path)) {
+            return Storage::disk('public')->delete($path);
         }
         return false;
     }
