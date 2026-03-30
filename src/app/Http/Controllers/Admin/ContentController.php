@@ -9,6 +9,7 @@ use App\Models\Sauna;
 use App\Models\Content;
 use App\Http\Requests\Admin\ContentRequest;
 use Illuminate\Support\Facades\DB;
+use App\Models\Image;
 use Illuminate\Support\Str;
 
 class ContentController extends Controller
@@ -81,7 +82,9 @@ class ContentController extends Controller
             $content->fill($request->validated());
 
             // 公開フラグの調整（チェックボックス対策）
-            $content->is_public = $request->has('is_public');
+            $content->is_public = $request['is_public'];
+
+            Image::moveFromTmp($request->upload_token, $content);
 
             $content->save();
         });

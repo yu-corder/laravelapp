@@ -31,7 +31,7 @@ class Sauna extends Model
 
     public function images()
     {
-        return $this->hasMany(SaunaImage::class);
+        return $this->morphMany(Image::class, 'imageable');
     }
 
     public function firstImage()

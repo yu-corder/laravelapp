@@ -14,10 +14,10 @@ abstract class BaseImageController extends Controller
     /**
      * アップロード共通処理
      */
-    protected function processUpload(ImageRequest $request)
+    protected function processUpload(ImageRequest $request,$key = 'image')
     {
-        $file = $request->file('image');
-        return $file->store($this->storagePath());
+        $file = $request->file($key);
+        return $file->store($this->storagePath(), 'public');
     }
 
     /**

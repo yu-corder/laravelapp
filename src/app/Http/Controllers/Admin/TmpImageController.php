@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\TmpSaunaImage;
+use App\Models\TmpImage;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Admin\ImageRequest;
 
@@ -14,22 +14,23 @@ class TmpImageController extends BaseImageController
 
     public function upload(ImageRequest $request)
     {
+        $fileKey = $request->hasFile('upload') ? 'upload' : 'image';
 
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $path = $this->processUpload($request);
+        if ($request->hasFile($fileKey)) {
+            $path = $this->processUpload($request, $fileKey);
 
-            $tmp = TmpSaunaImage::create([
-                'upload_token' => $request->upload_token,
-                'path' => $path,
+            $tmp = TmpImage::create([
+                'token' => $request->upload_token,
+                'file_path' => $path,
             ]);
 
             return response()->json([
-                'status' => 'success',
-                'path' => $path,
-                'url' => Storage::url($path),
-                'id' => $tmp->id,
-                'msg' => '画像を一時保存しました',
+                'status'  => 'success',
+                'uploaded' => true,
+                'path'    => $path,
+                'url'     => Storage::url($path),
+                'id'      => $tmp->id,
+                'msg'     => '画像を一時保存しました',
             ]);
         }
 
@@ -38,7 +39,7 @@ class TmpImageController extends BaseImageController
 
     public function delete(ImageRequest $request)
     {
-        $tmpImage = TmpSaunaImage::find($request->id);
+        $tmpImage = TmpImage::find($request->id);
 
         if ($tmpImage) {
             $this->processDelete($tmpImage->path);

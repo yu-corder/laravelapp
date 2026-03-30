@@ -24,4 +24,9 @@ class Content extends Model
     {
         return $this->belongsTo(Sauna::class, 'sauna_id');
     }
+
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }
