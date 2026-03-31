@@ -53,17 +53,14 @@
     </div>
 </div>
 
-{{-- --- スクリプトセクション --- --}}
 <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/translations/ja.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // CSRFトークンの取得
         const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
         const uploadToken = document.getElementById('upload_token').value;
 
-        // CKEditorの初期化
         ClassicEditor
             .create(document.querySelector('#editor'), {
                 language: 'ja',
@@ -73,8 +70,6 @@
                 }
             })
             .catch(error => { console.error(error); });
-
-        // タイプによるサウナ選択肢の表示制御
         const typeSelect = document.querySelector('select[name="type"]');
         const saunaGroup = document.getElementById('sauna_select_group');
 
@@ -83,28 +78,6 @@
         }
 
         typeSelect.addEventListener('change', toggleSaunaSelect);
-        toggleSaunaSelect(); // 初期表示時にも実行
+        toggleSaunaSelect();
     });
 </script>
-
-<style>
-    /* WordPress風の見出し装飾。
-       エディタ内(.ck-content)とプレビュー時両方に効くように調整 */
-    .ck-content h2, .article-preview h2 {
-        border-left: 5px solid #007bff;
-        padding-left: 15px;
-        margin: 1.5em 0 1em;
-        background: #f8f9fa;
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
-    .ck-content h3, .article-preview h3 {
-        border-bottom: 2px solid #007bff;
-        padding-bottom: 5px;
-        margin: 1.2em 0 0.8em;
-    }
-    /* エディタの高さ調整 */
-    .ck-editor__editable {
-        min-height: 400px;
-    }
-</style>

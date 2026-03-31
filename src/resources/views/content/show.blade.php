@@ -14,16 +14,4 @@
 <div class="ck-content">
     {!! $content->body !!}
 </div>
-
-<style>
-.ck-content h2 {
-    border-left: 5px solid #007bff;
-    padding-left: 15px;
-    /* 管理画面で設定したスタイルをここにコピー */
-}
-.ck-content img {
-    max-width: 100%;
-    height: auto;
-}
-</style>
 @endsection

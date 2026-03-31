@@ -352,3 +352,20 @@ select.c-form__input {
 .content-delete {
     margin-top: 5px;
 }
+
+.ck-content h2, .article-preview h2 {
+    border-left: 5px solid #007bff;
+    padding-left: 15px;
+    margin: 1.5em 0 1em;
+    background: #f8f9fa;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.ck-content h3, .article-preview h3 {
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
+    margin: 1.2em 0 0.8em;
+}
+.ck-editor__editable {
+    min-height: 400px;
+}

@@ -209,3 +209,12 @@ thead tr {
     border-radius: 6px;
     text-decoration: none;
 }
+
+.ck-content h2 {
+    border-left: 5px solid #007bff;
+    padding-left: 15px;
+}
+.ck-content img {
+    max-width: 100%;
+    height: auto;
+}
