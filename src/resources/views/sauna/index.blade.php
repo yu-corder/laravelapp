@@ -8,7 +8,7 @@
 @include('layouts.sauna.sidebar')
 
 @section('contents')
-<h1>おすすめサウナ一覧</h1>
+<h2>おすすめサウナ一覧</h2>
 <div class="sauna-grid">
 @foreach ($saunas as $sauna)
     <div class="sauna-card">
