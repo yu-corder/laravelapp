@@ -353,6 +353,10 @@ select.c-form__input {
     margin-top: 5px;
 }
 
+.mb-4 {
+    text-align: right;
+}
+
 .ck-content h2, .article-preview h2 {
     border-left: 5px solid #007bff;
     padding-left: 15px;

@@ -33,7 +33,6 @@
         <div class="sa-katsu-button-group">
             <button class="tbl-btn c-btn--delete sa-katsu-button" type="button" onclick="closeModal()">閉じる</button>
             @if($isEdit)
-                {{-- 編集時のみ削除ボタンを表示 --}}
                 <button class="tbl-btn c-btn--delete sa-katsu-button" type="button"
                         onclick="if(confirm('このサ活記録を削除しますか？')){ deleteHistory('{{ $history->id }}'); }">
                     削除

@@ -7,7 +7,6 @@
 
 @include('layouts.admin.sidebar')
 
-<!-- 'contents'という名称で他のBladeからの呼び出しを可能にする -->
 @section('contents')
 <h2>コンテンツ一覧</h2>
 <div class="container">
