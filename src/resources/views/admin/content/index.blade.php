@@ -1,13 +1,10 @@
-<!-- main.blade.phpの継承 -->
 @extends('layouts.admin.main')
 
 <!-- main.blade.php @yield('title')への値受け渡し -->
 @section('title', 'コンテンツ一覧')
 
-<!-- header.blade.php の読み込み -->
 @include('layouts.admin.header')
 
-<!-- sidebar.blade.php の読み込み -->
 @include('layouts.admin.sidebar')
 
 <!-- 'contents'という名称で他のBladeからの呼び出しを可能にする -->
@@ -38,7 +35,6 @@
             <tr>
                 <td>{{ $content->id }}</td>
                 <td>
-                    {{-- タイプに応じたラベル表示など --}}
                     {{ $content->type === 'facility' ? '施設紹介' : ($content->type === 'column' ? 'コラム' : 'お知らせ') }}
                 </td>
                 <td>{{ $content->sauna->name ?? '-' }}</td>
