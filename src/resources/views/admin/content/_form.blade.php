@@ -5,7 +5,6 @@
         id="upload_token"
         name="upload_token"
         value="{{ old('upload_token', $uploadToken) }}">
-        {{-- 記事タイプ --}}
         <div class="form-group mb-3">
             <label class="form-label">記事タイプ <span class="c-badge--required">必須</span></label>
             <select name="type" class="c-form__input @error('type') is-invalid @enderror">
@@ -16,7 +15,6 @@
             @error('type') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
 
-        {{-- 対象サウナ選択 --}}
         <div id="sauna_select_group" class="form-group mb-3">
             <label class="form-label">紐づけるサウナ</label>
             <select name="sauna_id" class="c-form__input @error('sauna_id') is-invalid @enderror">
@@ -30,7 +28,6 @@
             @error('sauna_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
 
-        {{-- タイトル --}}
         <div class="form-group mb-3">
             <label class="form-label">タイトル <span class="c-badge--required">必須</span></label>
             <input type="text" name="title" class="c-form__input @error('title') is-invalid @enderror"

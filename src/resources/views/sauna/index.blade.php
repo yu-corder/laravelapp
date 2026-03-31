@@ -1,17 +1,13 @@
-<!-- main.blade.phpの継承 -->
 @extends('layouts.sauna.main')
 
 <!-- main.blade.php @yield('title')への値受け渡し -->
 @section('title', 'サウナ一覧')
 
-<!-- header.blade.php の読み込み -->
 @include('layouts.sauna.header')
 
-<!-- sidebar.blade.php の読み込み -->
 @include('layouts.sauna.sidebar')
 
 @section('contents')
-{{-- 一般ユーザー向けサウナ一覧 --}}
 <h1>おすすめサウナ一覧</h1>
 <div class="sauna-grid">
 @foreach ($saunas as $sauna)
@@ -45,4 +41,5 @@
         </div>
     </div>
 @endforeach
-</div>@endsection
+</div>
+@endsection
