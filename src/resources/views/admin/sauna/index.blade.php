@@ -8,14 +8,6 @@
 @include('layouts.admin.sidebar')
 
 @section('contents')
-<h1>サウナ</h1>
-<h2>サウナ検索</h2>
-<form action="{{ url('item') }}" method="get">
-    <div>
-        <input class="input-border" type="text" name="name" placeholder="サウナ名">
-        <button class="search-btn" type="submit">検索</button>
-    </div>
-</form>
 
 <h2>サウナ一覧</h2>
     <table class="tbl">
