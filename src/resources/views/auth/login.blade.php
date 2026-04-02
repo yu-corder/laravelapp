@@ -1,57 +1,80 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ログイン | Sauna_rally!</title>
+    @vite(['resources/js/app.js'])
+    <link href="{{ asset('css/admin/style.css') }}" rel="stylesheet" type="text/css">
+</head>
+<body class="p-login">
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+    <div class="p-login__inner">
+        <div class="p-login__logo">
+            <h1 class="p-login__logo-main">Sauna_rally!</h1>
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+        <div class="p-login__card">
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <!-- Forgot Password -->
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot Your Password?') }}
-                </a>
+            @if (session('status'))
+                <div class="status-message">
+                    {{ session('status') }}
+                </div>
             @endif
 
-            <x-primary-button class="ml-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+
+                <div class="form-group">
+                    <label for="email">メールアドレス<span class="c-badge--required">必須</span></label>
+                    <input
+                        id="email"
+                        class="c-form__input @error('email') is-invalid @enderror"
+                        type="email"
+                        name="email"
+                        value="{{ old('email') }}"
+                        required
+                        autofocus
+                        placeholder="メールアドレスを入力してください">
+                    @error('email')
+                        <div class="error-message">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <div class="p-login__password-label-row">
+                        <label for="password">パスワード<span class="c-badge--required">必須</span></label>
+                    </div>
+                    <input
+                        id="password"
+                        class="c-form__input @error('password') is-invalid @enderror"
+                        type="password"
+                        name="password"
+                        required
+                        autocomplete="current-password"
+                        placeholder="パスワードを入力してください">
+                    @error('password')
+                        <div class="error-message">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="remember_me" class="p-login__remember">
+                        <input id="remember_me" type="checkbox" name="remember" class="p-login__remember-input">
+                        ログイン状態を保持する
+                    </label>
+                </div>
+
+                <div class="form-btn-group">
+                    <input type="submit" class="tbl-btn edit c-btn--primary" value="ログイン">
+                </div>
+            </form>
         </div>
-    </form>
 
-    <!-- Register -->
-    @if (Route::has('register'))
-    <div class="mt-5">
-        <hr>
-        <a href="{{ route('register') }}" class="block mt-2 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
+        <div class="p-login__footer">
+            <a href="/" class="p-login__back-link">← サイトトップへ戻る</a>
+        </div>
     </div>
-    @endif
 
-</x-guest-layout>
+</body>
+</html>
