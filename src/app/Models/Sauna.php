@@ -44,4 +44,26 @@ class Sauna extends Model
         return $this->hasMany(Content::class);
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($sauna) {
+            foreach ($sauna->images as $image) {
+                if ($image->file_path && \Storage::disk('public')->exists($image->file_path)) {
+                    \Storage::disk('public')->delete($image->file_path);
+                }
+                $image->delete();
+            }
+
+            foreach ($sauna->contents as $content) {
+                $content->delete();
+            }
+
+            if ($sauna->rating) {
+                $sauna->rating()->delete();
+            }
+        });
+    }
+
 }

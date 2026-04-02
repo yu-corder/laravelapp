@@ -29,4 +29,23 @@ class Content extends Model
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+    protected static function boot()
+    {
+        parent::boot();
+        static::deleting(function ($content) {
+            foreach ($content->images as $image) {
+                if ($image->file_path && \Storage::disk('public')->exists($image->file_path)) {
+                    \Storage::disk('public')->delete($image->file_path);
+                }
+                $image->delete();
+            }
+
+            $pattern = '/storage\/(content\/' . $content->id . '\/.*?\.(jpg|jpeg|png|gif|webp))/i';
+            if (preg_match_all($pattern, $content->body, $matches)) {
+                foreach ($matches[1] as $path) {
+                    \Storage::disk('public')->delete($path);
+                }
+            }
+        });
+    }
 }
