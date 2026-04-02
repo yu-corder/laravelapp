@@ -222,3 +222,19 @@ thead tr {
 .empty-message {
     color: #cf3a3a;
 }
+.sauna-rating {
+    margin-bottom: 10px;
+}
+.sauna-rating-flex {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.sauna-rating-star {
+    color: #f1c40f;
+    font-size: 1.2rem;
+}
+.sauna-rating-score {
+    font-weight: bold;
+    font-size: 1.1rem;
+}

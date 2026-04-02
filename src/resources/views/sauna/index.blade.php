@@ -25,6 +25,17 @@
         <div class="sauna-info">
             <h3 style="margin: 0 0 8px 0;">{{ $sauna->name }}</h3>
 
+            @if($sauna->rating)
+                <div class="sauna-rating">
+                    <div class="sauna-rating-flex">
+                        <span class="sauna-rating-star">★</span>
+                        <span class="sauna-rating-score">
+                            {{ number_format($sauna->rating->total_score, 1) }}
+                        </span>
+                    </div>
+                </div>
+            @endif
+
             <p class="sauna-description">
                 {{ $sauna->description ?? 'サウナの説明がここに表示されます。' }}
             </p>

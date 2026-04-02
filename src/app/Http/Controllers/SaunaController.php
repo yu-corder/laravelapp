@@ -9,9 +9,13 @@ class SaunaController extends Controller
 {
     public function index()
     {
-        $saunas = Sauna::with(['firstImage', 'contents' => function($query) {
+        $saunas = Sauna::select('saunas.*')
+        ->leftJoin('ratings', 'saunas.id', '=', 'ratings.sauna_id')
+        ->with(['firstImage', 'rating', 'contents' => function($query) {
             $query->where('is_public', true)->latest();
-        }])->get();
+        }])
+        ->orderByDesc('ratings.total_score')
+        ->get();
 
         return view('sauna.index', compact('saunas'));
     }
