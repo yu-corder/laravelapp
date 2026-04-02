@@ -59,6 +59,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/content/edit/{id}', [ContentController::class, 'showEdit']);
     Route::post('/admin/content/edit/{id}', [ContentController::class, 'edit']);
 
+    Route::post('/admin/content/delete/{id}', [ContentController::class, 'delete']);
+
     Route::post('/admin/content/image-upload', [ContentController::class, 'uploadImage'])->name('admin.content.image.upload');
 
     Route::post('/admin/upload/tmp', [TmpImageController::class, 'upload'])->name('admin.image.tmp.upload');
