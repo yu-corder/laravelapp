@@ -29,11 +29,6 @@ Route::get('/admin/sauna', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/admin/sauna', [SaunaController::class, 'index']);
 
-    Route::post('/admin/sauna/upload-tmp', [TmpImageController::class, 'upload'])->name('admin.sauna.upload_tmp');
-    Route::post('/admin/sauna/delete-tmp', [TmpImageController::class, 'delete'])->name('admin.sauna.delete_tmp');
-
-    Route::post('/admin/sauna/delete-img', [SaunaImageController::class, 'delete'])->name('admin.sauna.delete_img');
-
     Route::get('/admin/sauna/add', [SaunaController::class, 'showAdd']);
     Route::post('/admin/sauna/add', [SaunaController::class, 'add']);
 
@@ -61,13 +56,10 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/admin/content/delete/{id}', [ContentController::class, 'delete']);
 
-    Route::post('/admin/content/image-upload', [ContentController::class, 'uploadImage'])->name('admin.content.image.upload');
-
     Route::post('/admin/upload/tmp', [TmpImageController::class, 'upload'])->name('admin.image.tmp.upload');
     Route::post('/admin/upload/tmp/delete', [TmpImageController::class, 'delete'])->name('admin.image.tmp.delete');
 
     Route::post('/admin/img/delete', [ImageController::class, 'delete'])->name('admin.img.delete');
-
 
 });
 
