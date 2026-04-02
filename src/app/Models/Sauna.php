@@ -63,6 +63,11 @@ class Sauna extends Model
             if ($sauna->rating) {
                 $sauna->rating()->delete();
             }
+
+            $directory = "sauna/{$sauna->id}";
+            if (\Storage::disk('public')->exists($directory)) {
+                \Storage::disk('public')->deleteDirectory($directory);
+            }
         });
     }
 

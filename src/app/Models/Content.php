@@ -46,6 +46,11 @@ class Content extends Model
                     \Storage::disk('public')->delete($path);
                 }
             }
+
+            $directory = "content/{$content->id}";
+            if (\Storage::disk('public')->exists($directory)) {
+                \Storage::disk('public')->deleteDirectory($directory);
+            }
         });
     }
 }
