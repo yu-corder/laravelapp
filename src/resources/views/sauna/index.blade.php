@@ -10,7 +10,7 @@
 @section('contents')
 <h2>おすすめサウナ一覧</h2>
 <div class="sauna-grid">
-@foreach ($saunas as $sauna)
+@forelse ($saunas as $sauna)
     <div class="sauna-card">
         <div class="sauna-image-wrapper">
             @if($sauna->firstImage)
@@ -40,6 +40,10 @@
             @endif
         </div>
     </div>
-@endforeach
+@empty
+    <div class="empty-messages">
+        <p class="empty-message">{{ __('messages.empty_state.description') }}</p>
+    </div>
+@endforelse
 </div>
 @endsection
