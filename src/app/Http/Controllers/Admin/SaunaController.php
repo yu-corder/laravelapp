@@ -93,7 +93,7 @@ class SaunaController extends Controller
      */
     public function delete($id)
     {
-        $sauna = Sauna::find($id);
+        $sauna = Sauna::findOrFail($id);
         $sauna->delete();
         Log::info("削除が完了しました。");
         return redirect("/admin/sauna");
