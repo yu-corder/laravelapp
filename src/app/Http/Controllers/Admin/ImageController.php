@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 class ImageController extends BaseImageController
 {
-    protected function storagePath(): string { return 'public/saunas'; }
+    protected function storagePath(): string { return 'saunas'; }
 
     public function delete(ImageRequest $request)
     {

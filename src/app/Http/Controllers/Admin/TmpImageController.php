@@ -10,7 +10,7 @@ use App\Http\Requests\Admin\ImageRequest;
 
 class TmpImageController extends BaseImageController
 {
-    protected function storagePath(): string { return 'public/tmp'; }
+    protected function storagePath(): string { return 'tmp'; }
 
     public function upload(ImageRequest $request)
     {
