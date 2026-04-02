@@ -1,6 +1,9 @@
 * {
     box-sizing: border-box;
 }
+.sauna-rally-logo {
+    height: 70px;
+}
 body {
     margin: 0;
     background: #f1f1f1;

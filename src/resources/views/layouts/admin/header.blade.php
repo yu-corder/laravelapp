@@ -2,10 +2,9 @@
 <header class="header">
     <div class="header-inner">
         <div class="logo">
-            <h1>
-                <small>サウナラリー管理</small>
-                Sauna_rally!
-            </h1>
+            <a href="{{ url('admin/sauna') }}">
+                <img class="sauna-rally-logo" src="{{ asset('images/icons/sauna_rally_log3.png') }}" alt="Sauna_rally!">
+            </a>
         </div>
         <nav class="login-user">
             <a href="{{ url('profile') }}">
