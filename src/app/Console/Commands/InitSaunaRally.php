@@ -31,7 +31,7 @@ class InitSaunaRally extends Command
             return;
         }
 
-        $this->call('migrate:fresh');
+        $this->call('migrate:fresh', ['--seed' => true]);
 
         $directories = ['content', 'sauna', 'tmp'];
         foreach ( $directories as $directory ) {
