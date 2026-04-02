@@ -47,6 +47,19 @@ class CleanupImages extends Command
             }
         }
 
+        $this->info('Checking for empty directories in content...');
+        $directories = Storage::disk('public')->directories('content');
+
+        foreach ($directories as $dir) {
+            $files = Storage::disk('public')->allFiles($dir);
+            $subDirs = Storage::disk('public')->directories($dir);
+
+            if (empty($files) && empty($subDirs)) {
+                Storage::disk('public')->deleteDirectory($dir);
+                $this->line("Deleted empty directory: {$dir}");
+            }
+        }
+
         $this->info('Cleanup completed!');
     }
 }
