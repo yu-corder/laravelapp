@@ -1,0 +1,12 @@
+services:
+  web:
+    restart: always
+
+  nginx:
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+
+  mariadb:
+    restart: always
