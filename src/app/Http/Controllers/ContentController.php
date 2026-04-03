@@ -9,10 +9,14 @@ class ContentController extends Controller
 {
     public function show($id)
     {
-        $content = Content::with('sauna')
-            ->where('is_public', true)
-            ->findOrFail($id);
+        $content = Content::with(['sauna.images' => function ($query) {
+            $query->latest()->limit(1);
+        }])
+        ->where('is_public', true)
+        ->findOrFail($id);
 
-        return view('content.show', compact('content'));
+        $saunaImage = $content->sauna->images->first();
+
+        return view('content.show', compact('content', 'saunaImage'));
     }
 }
