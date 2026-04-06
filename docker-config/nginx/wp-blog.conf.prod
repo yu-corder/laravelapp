@@ -1,6 +1,10 @@
 server {
     listen 80;
     server_name yu-syumilog.com www.yu-syumilog.com;
+
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/html;
+    }
     
     location / {
         proxy_pass http://133.167.92.6:8080;
