@@ -11,6 +11,7 @@ use Illuminate\Http\UploadedFile;
 
 class SaunaTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * user index view test
      */
