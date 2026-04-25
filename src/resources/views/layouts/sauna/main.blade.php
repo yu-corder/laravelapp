@@ -14,9 +14,9 @@
 
 </head>
 <body>
-    @yield('header')
+    @include('layouts.sauna.header')
     <div class="main">
-        @yield('sidebar')
+        @include('layouts.sauna.sidebar')
         <div class="contents">
             @yield('contents')
         </div>

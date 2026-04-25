@@ -1,15 +1,6 @@
 @extends('layouts.sauna.main')
 
-<!-- main.blade.php @yield('title')への値受け渡し -->
 @section('title', 'サウナ一覧')
-
-@section('header')
-    @include('layouts.sauna.header')
-@endsection
-
-@section('sidebar')
-    @include('layouts.sauna.sidebar')
-@endsection
 
 @section('contents')
 <h2>おすすめサウナ一覧</h2>
