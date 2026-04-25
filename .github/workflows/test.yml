@@ -14,8 +14,10 @@ jobs:
           cd src
           composer install --no-interaction --prefer-dist --optimize-autoloader
           
-          if [ ! -f .env ]; then
-            cp .env.testing .env
-          fi
+          cp .env.example .env
+          echo "APP_KEY=base64:$(openssl rand -base64 32)" >> .env
+          echo "DB_CONNECTION=sqlite" >> .env
+          echo "DB_DATABASE=:memory:" >> .env
+          echo "VITE_SKIP_PRECOGNITION=true" >> .env
           
           php artisan test
