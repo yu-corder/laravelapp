@@ -1,13 +1,21 @@
-name: Test on Google Cloud VM
+name: Remote Test on Google Cloud
 
 on: [push]
 
 jobs:
-  test:
+  laravel-test:
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v4
-      - name: Run PHP Artisan Test
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Tests
         run: |
           cd src
+          composer install --no-interaction --prefer-dist --optimize-autoloader
+          
+          if [ ! -f .env ]; then
+            cp .env.testing .env
+          fi
+          
           php artisan test
