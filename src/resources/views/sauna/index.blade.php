@@ -3,9 +3,13 @@
 <!-- main.blade.php @yield('title')への値受け渡し -->
 @section('title', 'サウナ一覧')
 
-@include('layouts.sauna.header')
+@section('header')
+    @include('layouts.sauna.header')
+@endsection
 
-@include('layouts.sauna.sidebar')
+@section('sidebar')
+    @include('layouts.sauna.sidebar')
+@endsection
 
 @section('contents')
 <h2>おすすめサウナ一覧</h2>

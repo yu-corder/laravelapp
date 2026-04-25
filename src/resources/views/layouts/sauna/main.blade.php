@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <!-- @section('title', '商品一覧')の内容を読み込み -->
     <title>サウナ管理システム - @yield('title')</title>
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'>
@@ -15,12 +14,9 @@
 
 </head>
 <body>
-    @section('header')
     @yield('header')
     <div class="main">
-        @section('sidebar')
         @yield('sidebar')
-        @section('contents')
         <div class="contents">
             @yield('contents')
         </div>

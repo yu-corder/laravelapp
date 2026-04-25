@@ -1,4 +1,3 @@
-@section('header')
 <header class="header">
     <div class="header-inner">
         <div class="logo">
@@ -8,4 +7,3 @@
         </div>
     </div>
 </header>
-@endsection
