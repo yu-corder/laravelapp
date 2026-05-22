@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a349383c5500fe749471b3bfb83df832",
+    "content-hash": "0a71b278b412959de9be9721ffc5a5e6",
     "packages": [
         {
             "name": "brick/math",
@@ -5675,6 +5675,60 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "yu-corder/php-rcs",
+            "version": "v0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yu-corder/php-rcs.git",
+                "reference": "b8f175763d36febde431a1106beafd82379bdaad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yu-corder/php-rcs/zipball/b8f175763d36febde431a1106beafd82379bdaad",
+                "reference": "b8f175763d36febde431a1106beafd82379bdaad",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "phpunit/phpunit": "^10.5"
+            },
+            "bin": [
+                "bin/rcs"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "YuCorder\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "yu-corder",
+                    "email": "yuuya.9602@icloud.com",
+                    "homepage": "https://yu-syumilog.com/"
+                }
+            ],
+            "description": "A pure PHP implementation of a Revision Control System (RCS) for file versioning.",
+            "keywords": [
+                "diff",
+                "rcs",
+                "revision",
+                "version-control"
+            ],
+            "support": {
+                "issues": "https://github.com/yu-corder/php-rcs/issues",
+                "source": "https://github.com/yu-corder/php-rcs"
+            },
+            "time": "2026-05-22T15:21:41+00:00"
         }
     ],
     "packages-dev": [
@@ -8311,5 +8365,5 @@
         "php": "^8.1"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
