@@ -1,0 +1,16 @@
+services:
+  web:
+    restart: always
+
+  nginx:
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker-config/nginx/default.conf.local:/etc/nginx/http.d/default.conf
+      - ./docker-config/nginx/wp-blog.conf.local:/etc/nginx/http.d/wp-blog.conf
+      - ./docker-config/nginx/certs:/etc/nginx/certs:ro
+    restart: always
+
+  mariadb:
+    restart: always
